@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "This cordova plugin ",
   "cordova": {
-    "id": "cordova-plugin-ftp",
+    "id": "cordova-plugin-zebra",
     "platforms": [
       "android"
     ]

@@ -20,25 +20,25 @@
  */
 
 var exec = require('cordova/exec');
+//
+// /**
+//  * Util to remove path protocol prefix.
+//  */
+// function removePathProtocolPrefix(path) {
+//   if (path.indexOf("file://") === 0) {
+//     return path.substring(7);
+//   } else if (path.indexOf("file:") === 0) {
+//     return path.substring(5);
+//   } else {
+//     return path;
+//   }
+// }
 
 /**
- * Util to remove path protocol prefix.
- */
-function removePathProtocolPrefix(path) {
-  if (path.indexOf("file://") === 0) {
-    return path.substring(7);
-  } else if (path.indexOf("file:") === 0) {
-    return path.substring(5);
-  } else {
-    return path;
-  }
-}
-
-/**
- * Ftp class
+ * Zebra class
  * @constructor
  */
-function Ftp() {}
+function Zebra() {}
 
 /**
  * Connect to one ftp server.
@@ -53,10 +53,10 @@ function Ftp() {}
  *                                   Notice: For iOS, if triggered, means `init` success. But NOT means the later action, e.g. `ls`... `download` will success!
  * @param {function} errorCallback The error callback. If triggered, means init fail.
  */
-Ftp.prototype.connect = function(hostname, username, password, successCallback, errorCallback) {
+Zebra.prototype.connect = function(hostname, username, password, successCallback, errorCallback) {
   exec(successCallback,
       errorCallback,
-      "Ftp",
+      "ZebraMain",
       "connect", [hostname, username, password]);
 };
 
@@ -76,15 +76,15 @@ Ftp.prototype.connect = function(hostname, username, password, successCallback, 
  * @param {function} successCallback The success callback, invoked with arg `{array} fileList`.
  * @param {function} errorCallback The error callback. If triggered, means fail.
  */
-Ftp.prototype.ls = function(path, successCallback, errorCallback) {
+Zebra.prototype.list = function(successCallback, errorCallback) {
   exec(function(fileList) {
         if (fileList instanceof Array) {
           successCallback(fileList);
         }
       },
       errorCallback,
-      "Ftp",
-      "list", [removePathProtocolPrefix(path)]);
+      "ZebraMain",
+      "list");
 };
 
 /**
@@ -94,10 +94,10 @@ Ftp.prototype.ls = function(path, successCallback, errorCallback) {
  * @param {function} successCallback The success callback. If triggered, means success.
  * @param {function} errorCallback The error callback. If triggered, means fail.
  */
-Ftp.prototype.mkdir = function(path, successCallback, errorCallback) {
+Zebra.prototype.mkdir = function(path, successCallback, errorCallback) {
   exec(successCallback,
       errorCallback,
-      "Ftp",
+      "ZebraMain",
       "createDirectory", [removePathProtocolPrefix(path)]);
 };
 
@@ -110,10 +110,10 @@ Ftp.prototype.mkdir = function(path, successCallback, errorCallback) {
  * @param {function} successCallback The success callback. If triggered, means success.
  * @param {function} errorCallback The error callback. If triggered, means fail.
  */
-Ftp.prototype.rmdir = function(path, successCallback, errorCallback) {
+Zebra.prototype.rmdir = function(path, successCallback, errorCallback) {
   exec(successCallback,
       errorCallback,
-      "Ftp",
+      "ZebraMain",
       "deleteDirectory", [removePathProtocolPrefix(path)]);
 };
 
@@ -124,10 +124,10 @@ Ftp.prototype.rmdir = function(path, successCallback, errorCallback) {
  * @param {function} successCallback The success callback. If triggered, means success.
  * @param {function} errorCallback The error callback. If triggered, means fail.
  */
-Ftp.prototype.rm = function(file, successCallback, errorCallback) {
+Zebra.prototype.rm = function(file, successCallback, errorCallback) {
   exec(successCallback,
       errorCallback,
-      "Ftp",
+      "ZebraMain",
       "deleteFile", [removePathProtocolPrefix(file)]);
 };
 
@@ -141,10 +141,10 @@ Ftp.prototype.rm = function(file, successCallback, errorCallback) {
  *                                   The arg `0`, `0.11..`, `0.23..` ... `1` means the upload percent. When it reach `1`, means success.
  * @param {function} errorCallback The error callback. If triggered, means fail.
  */
-Ftp.prototype.upload = function(localFile, remoteFile, successCallback, errorCallback) {
+Zebra.prototype.upload = function(localFile, remoteFile, successCallback, errorCallback) {
   exec(successCallback,
       errorCallback,
-      "Ftp",
+      "ZebraMain",
       "uploadFile", [removePathProtocolPrefix(localFile), removePathProtocolPrefix(remoteFile)]);
 };
 
@@ -158,10 +158,10 @@ Ftp.prototype.upload = function(localFile, remoteFile, successCallback, errorCal
  *                                   The arg `0`, `0.11..`, `0.23..` ... `1` means the download percent. When it reach `1`, means success.
  * @param {function} errorCallback The error callback. If triggered, means fail.
  */
-Ftp.prototype.download = function(localFile, remoteFile, successCallback, errorCallback) {
+Zebra.prototype.download = function(localFile, remoteFile, successCallback, errorCallback) {
   exec(successCallback,
       errorCallback,
-      "Ftp",
+      "ZebraMain",
       "downloadFile", [removePathProtocolPrefix(localFile), removePathProtocolPrefix(remoteFile)]);
 };
 
@@ -171,10 +171,10 @@ Ftp.prototype.download = function(localFile, remoteFile, successCallback, errorC
  * @param {function} successCallback The success callback. If triggered, means `cancel` success.
  * @param {function} errorCallback The error callback. If triggered, means cancel fail.
  */
-Ftp.prototype.cancel = function(successCallback, errorCallback) {
+Zebra.prototype.cancel = function(successCallback, errorCallback) {
   exec(successCallback,
       errorCallback,
-      "Ftp",
+      "ZebraMain",
       "cancelAllRequests", []);
 };
 
@@ -184,11 +184,11 @@ Ftp.prototype.cancel = function(successCallback, errorCallback) {
  * @param {function} successCallback The success callback. If triggered, means `disconnect` success.
  * @param {function} errorCallback The error callback. If triggered, means disconnect fail.
  */
-Ftp.prototype.disconnect = function(successCallback, errorCallback) {
+  Zebra.prototype.disconnect = function(successCallback, errorCallback) {
   exec(successCallback,
       errorCallback,
-      "Ftp",
+      "ZebraMain",
       "disconnect", []);
 };
 
-module.exports = new Ftp();
+module.exports = new Zebra();

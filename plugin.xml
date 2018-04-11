@@ -26,20 +26,24 @@
   <repo>https://github.com/dlermen12/cordova-zebra-scanner-example</repo>
 
   <js-module src="www/zebra.js" name="zebra">
-    <clobbers target="cordova.plugin.zebra"/>
+    <runs/>
+    <clobbers target="ZebraPlugin"/>
   </js-module>
 
   <!-- android -->
   <platform name="android">
     <config-file target="res/xml/config.xml" parent="/*">
-      <feature name="Zebra">
-        <param name="android-package" value="com.byond.cordova.plugin.zebra.Zebra"/>
+
+      <feature name="ZebraMain">
+        <param name="android-package" value="com.byond.cordova.plugin.zebra.ZebraMain"/>
       </feature>
+
     </config-file>
 
-    <source-file src="src/android/Zebra.java" target-dir="src/com/byond/cordova/plugin/zebra"/>
+    <source-file src="src/android/ZebraMain.java" target-dir="com/byond/cordova/plugin/zebra"/>
+    <framework src="src/android/zebraApi.gradle" custom="true" type="gradleReference"/>
+    <lib-file src="src/android/API3_LIB-release.aar"/>
 
-    <lib-file src="src/android/libs/API3_LIB-release.aar"/>
   </platform>
 
 </plugin>
